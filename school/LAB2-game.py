@@ -10,7 +10,6 @@ inta = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 intb = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 intc = ['0', '1']
 ship1_coord = []
-ship2_coord = []
 
 while ship1_len < 1 or ship1_len > 4:
     ship1_len = int(input("Player 1, enter your ship length: "))
@@ -56,37 +55,49 @@ else:
     for x in range(index1b, (index1b+ship1_len), 1):
         coord_adding = in1a + "," + intb[x] + "," + in1c
         ship1_coord.append(coord_adding)
+print(ship1_coord)
 
-unfound2a = True
-unfound2b = True
-unfound2c = True
-index2a = 0
-index2b = 0
-while unfound2a or unfound2b or unfound2c:
-    in2a, in2b, in2c= [x for x in input("Player 2, enter your coordinate to place ship: ").split(',')]
-    for x in range(len(inta)):
-        if inta[x] == in2a:
-            if (x + ship2_len) <= len(inta):
-                unfound2a = False
-                index2a = x
-        if intb[x] == in2b:
-            if (x + ship2_len) <= len(intb):
-                unfound2b = False
-                index2b = x
-    for x in range(len(intc)):
-        if intc[x] == in2c:
-            unfound2c = False
-
-if ship2_alg == "horizontal":
-    num_added = 0
-    for x in range(index2a, (index2a+ship2_len), 1):
-        coord_adding = inta[x] + "," + in2b + "," + in2c
-        ship2_coord.append(coord_adding)
-else:
-    num_added = 0
-    for x in range(index2b, (index2b+ship2_len), 1):
-        coord_adding = in2a + "," + intb[x] + "," + in2c
-        ship2_coord.append(coord_adding)
+ship2_validity = False
+while ship2_validity == False:
+    unfound2a = True
+    unfound2b = True
+    unfound2c = True
+    index2a = 0
+    index2b = 0
+    ship2_temporary = []
+    while unfound2a or unfound2b or unfound2c:
+        in2a, in2b, in2c= [x for x in input("Player 2, enter your coordinate to place ship: ").split(',')]
+        for x in range(len(inta)):
+            if inta[x] == in2a:
+                if (x + ship2_len) <= len(inta):
+                    unfound2a = False
+                    index2a = x
+            if intb[x] == in2b:
+                if (x + ship2_len) <= len(intb):
+                    unfound2b = False
+                    index2b = x
+        for x in range(len(intc)):
+            if intc[x] == in2c:
+                unfound2c = False
+    if ship2_alg == "horizontal":
+        num_added = 0
+        for x in range(index2a, (index2a+ship2_len), 1):
+            coord_adding = inta[x] + "," + in2b + "," + in2c
+            ship2_temporary.append(coord_adding)
+    else:
+        num_added = 0
+        for x in range(index2b, (index2b+ship2_len), 1):
+            coord_adding = in2a + "," + intb[x] + "," + in2c
+            ship2_temporary.append(coord_adding)
+    for x in range(len(ship2_temporary)):
+        if ship2_temporary[x] in ship1_coord:
+            print("Nope, Player 1 already preoccupies the coordinates!")
+            break
+    else:
+        ship2_coord = ship2_temporary[:]
+        ship2_validity = True
+print(ship2_temporary)
+print(ship2_coord)
 
 while True:
     attack1 = input(inputreq1)
