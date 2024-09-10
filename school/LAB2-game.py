@@ -55,7 +55,6 @@ else:
     for x in range(index1b, (index1b+ship1_len), 1):
         coord_adding = in1a + "," + intb[x] + "," + in1c
         ship1_coord.append(coord_adding)
-print(ship1_coord)
 
 ship2_validity = False
 while ship2_validity == False:
@@ -96,8 +95,6 @@ while ship2_validity == False:
     else:
         ship2_coord = ship2_temporary[:]
         ship2_validity = True
-print(ship2_temporary)
-print(ship2_coord)
 
 while True:
     attack1 = input(inputreq1)
