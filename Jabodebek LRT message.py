@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 window = tkt.Tk()
 window.title("Announcements")
+window.geometry("900x220")
 CB_status = 0
 BK_status = 0
 stn_index = 0
@@ -23,9 +24,10 @@ msg_label_top = ""
 stn_name = ""
 msg_label_bottom = ""
 msg_label_door = ""
+DirCity = False
 
 def lineswitch(lin):
-    global CB_status, BK_status, stn_index, otw_index, texttoshow, stn_name, CB_stn, BK_stn
+    global Next, Slide, Prev, CB_status, BK_status, stn_index, otw_index, texttoshow, stn_name, CB_stn, BK_stn, Line1, Line2, Line3, Line4, Line5
     if lin == "cb":
         CB_status = 1
         CB_start.pack_forget()
@@ -55,9 +57,17 @@ def lineswitch(lin):
         Slide.pack_forget()
         Prev.pack_forget()
         Exit.pack_forget()
+        Next["state"] = "normal"
+        Prev["state"] = "normal"
+        Slide["state"] = "normal"
+        Screen1["text"] = ""
+        Screen2["text"] = ""
+        Screen3["text"] = ""
+        Screen4["text"] = ""
+        Screen5["text"] = ""
 
 def stnnameformat():
-    global CB_status, BK_status, stn_index, stn_name, CB_stn, BK_stn
+    global CB_status, BK_status, stn_index, stn_name, CB_stn, BK_stn, Line1, Line2, Line3, Line4, Line5
     if CB_status == 1:
         intc_index = -1
         for a in range(len(BK_stn)):
@@ -78,7 +88,7 @@ def stnnameformat():
             stn_name = BK_code[stn_index] + " " + CB_code[intc_index] + " " + BK_stn[stn_index]
 
 def stnmsg():
-    global CB_status, BK_status, stn_index, otw_index, CB_type, BK_type, msg_label_top, msg_label_bottom, msg_label_temp, msg_label_dest
+    global CB_status, BK_status, stn_index, otw_index, CB_type, BK_type, msg_label_top, msg_label_bottom, msg_label_temp, msg_label_dest, Line1, Line2, Line3, Line4, Line5
     if CB_status == 1:
         if CB_type[stn_index] == "Interchange":
             if otw_index == 0:
@@ -143,7 +153,7 @@ def stnmsg():
                 msg_label_bottom = ""
 
 def stnswitch(com):
-    global CB_status, BK_status, stn_index, otw_index, texttoshow, stn_name, msg_label_top, msg_label_bottom, msg_label_temp, msg_label_dest
+    global Next, Slide, Prev, DirCity, CB_status, BK_status, stn_index, otw_index, texttoshow, stn_name, msg_label_top, msg_label_bottom, msg_label_temp, msg_label_dest, Line1, Line2, Line3, Line4, Line5
     if com == "Next":
         if CB_status == 1:
             msg_label_temp = "Selamat datang di LRT Jabodebek Cibubur Line."
@@ -155,6 +165,9 @@ def stnswitch(com):
                 otw_index = 0
                 stnnameformat()
                 stnmsg()
+                DirCity = False
+                if stn_index == len(CB_code)-1:
+                    DirCity = True
         else:
             msg_label_temp = "Selamat datang di LRT Jabodebek Bekasi Line."
             msg_label_dest = "Tujuan akhir, " + (BK_code[len(BK_code)-1] + " " + BK_stn[len(BK_code)-1])
@@ -165,6 +178,9 @@ def stnswitch(com):
                 otw_index = 0
                 stnnameformat()
                 stnmsg()
+                DirCity = False
+                if stn_index == len(BK_code)-1:
+                    DirCity = True
     elif com == "Prev":
         if stn_index == 0:
             messagebox.showinfo("Attention", "This is terminus station of this line.")
@@ -183,6 +199,9 @@ def stnswitch(com):
                 msg_label_dest = "Tujuan akhir, " + (BK_code[0] + " " + BK_stn[0])
                 if BK_stn[stn_index] == "CAWANG":
                     msg_label_bottom += " Untuk penumpang yang akan melanjutkan ke KRL Bogor Line, mohon turun di Stasiun Transit CIKOKO."
+            DirCity = True
+            if stn_index == 0:
+                DirCity = False
     else:
         if otw_index == 2:
             messagebox.showinfo("Attention", "Move to the next station by selecting Towards Suburbs or City depending on direction.")
@@ -191,22 +210,42 @@ def stnswitch(com):
             stnnameformat()
             stnmsg()
     if otw_index == 0:
-        print(msg_label_temp)
-        print(msg_label_dest)
-        print("---------------------------------------------")
-    if msg_label_top != "":
-        print(msg_label_top)
-    print(stn_name)
-    if msg_label_bottom != "":
-        print(msg_label_bottom)
-    print("=============================================")
-    print("=============================================")
+        Screen1["text"]= msg_label_temp
+        Screen2["text"]= msg_label_dest
+    else:
+        Screen1["text"]=""
+        Screen2["text"]=""
+    Screen3["text"]= msg_label_top
+    Screen4["text"]= stn_name
+    Screen5["text"]= msg_label_bottom
+    if otw_index == 2:
+        Slide["state"] = "disabled"
+        if DirCity == False:
+            Next["state"] = "normal"
+            Prev["state"] = "disabled"
+        else:
+            Next["state"] = "disabled"
+            Prev["state"] = "normal"
+    else:
+        Slide["state"] = "normal"
+        Next["state"] = "disabled"
+        Prev["state"] = "disabled"
 
 CB_start = tkt.Button(text="Cibubur Line", command=lambda:[lineswitch("cb")])
 BK_start = tkt.Button(text="Bekasi Line", command=lambda:[lineswitch("bk")])
 Exit = tkt.Button(text="Back to Home", command=lambda:[lineswitch("stahp")])
-Next = tkt.Button(text="Towards Suburbs", command=lambda:[stnswitch("Next")])
-Slide = tkt.Button(text="Sliding", command=lambda:[stnswitch("Slide")])
-Prev = tkt.Button(text="Towards City", command=lambda:[stnswitch("Prev")])
+Next = tkt.Button(text="Towards Suburbs", command=lambda:[stnswitch("Next")], state="normal")
+Slide = tkt.Button(text="Sliding", command=lambda:[stnswitch("Slide")], state="normal")
+Prev = tkt.Button(text="Towards City", command=lambda:[stnswitch("Prev")], state="disabled")
+Screen1 = tkt.Label(anchor=tkt.CENTER, text="")
+Screen2 = tkt.Label(anchor=tkt.CENTER, text="")
+Screen3 = tkt.Label(anchor=tkt.CENTER, text="")
+Screen4 = tkt.Label(anchor=tkt.CENTER, text="")
+Screen5 = tkt.Label(anchor=tkt.CENTER, text="")
+Screen1.pack()
+Screen2.pack()
+Screen3.pack()
+Screen4.pack()
+Screen5.pack()
 CB_start.pack()
 BK_start.pack()
