@@ -1,0 +1,6 @@
+My projects so far:
+1. Train announcement. A Tkinter program (based on Python) that shows the message of announcements onboard the LRT Jabodebek. This is just fun.
+2. Power draw calculator (used by SoCs, just theoretical)
+3. School event websites (cccup.id is official website of CC Cup 2023, before August 2024)
+4. School event apps (CC Cup 2023, available still on Google Play, though the database no longer exists).
+5. OBS Studio Controller. Using Python to control keyboard shortcuts, automating elements on OBS Studio (specifically made scenes).
