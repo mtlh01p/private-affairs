@@ -24,4 +24,5 @@ for i in range(overhead, cardinals+1):
     c3 = (Decimal(1) - probability) ** (cardinals - i)
     actual_probability += c1*c2*c3
 
-print("Probability of this cardinal getting elected Pope: ", actual_probability)
+print("Probability of this cardinal getting elected Pope (including probability of no cardinal elected): ", actual_probability)
+print("Probability of this cardinal getting elected Pope (among his peers): ", probability)
