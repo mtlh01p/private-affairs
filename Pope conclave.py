@@ -5,13 +5,17 @@ print("NOTICE: As we mourn the death of Pope Francis, let us continue to pray so
 print("")
 print("POPE CONCLAVE 2025")
 
-cardinals = int(input("Enter number of cardinals: "))
+cardinals_buffer = input("Enter number of cardinals: ")
+while not cardinals_buffer.isdigit():
+    print("Please enter valid number of cardinals. Only those aged below 80 are eligible to vote and be elected.")
+    cardinals_buffer = input("Enter valid number of cardinals: ")
+cardinals = int(cardinals_buffer)
 probability_buffer = input("Enter probability of the cardinal you enquire: ")
 overhead = math.ceil(cardinals * 2/3)
-if not probability_buffer.isdigit():
-    probability = Decimal(1)/Decimal(cardinals)
-else:
+try:
     probability = Decimal(probability_buffer)
+except:
+    probability = Decimal(1) / Decimal(cardinals)
 
 actual_probability = Decimal(0)
 for i in range(overhead, cardinals+1):
