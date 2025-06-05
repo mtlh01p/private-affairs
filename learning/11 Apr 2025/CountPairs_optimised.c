@@ -14,15 +14,6 @@ int get_msb_pos(int n) {
     return pos;
 }
 
-// For GCC/Clang, you can use __builtin_clz for faster MSB calculation:
-/*
-int get_msb_pos_builtin(int n) {
-    if (n == 0) return -1;
-    // For 32-bit int, MSB position is 31 - number of leading zeros
-    return (sizeof(int) * CHAR_BIT - 1) - __builtin_clz(n);
-}
-*/
-
 int main() {
     int T;
     scanf("%d", &T);
