@@ -14,7 +14,7 @@ void findCombinations(int index, int totalVotes) {
         for (const string& s : current_combo) {
             cout << "  " << s << endl;
         }
-        cout << endl;
+        cout<< endl;
     }
 
     if (index == 50 || totalVotes > 300) return;
