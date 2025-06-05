@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h> // For memset
-#include <limits.h> // For CHAR_BIT
+#include <limits.h> // For CHAR_BI
 
 // Function to find the position of the Most Significant Bit (MSB)
 // For a non-zero integer x, it returns k such that 2^k <= x < 2^(k+1)
