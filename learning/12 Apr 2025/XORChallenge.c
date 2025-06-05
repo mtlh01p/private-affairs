@@ -5,7 +5,7 @@ int get_msb_pos(int n) {
     int pos = 0;
     while (n > 1) {
         n >>= 1;
-        pos++;
+        pos += 1;
     }
     return pos;
 }
