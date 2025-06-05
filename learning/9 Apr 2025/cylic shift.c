@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int main(){
+int main() {
 	int T;
 	scanf("%d", &T);
 	for(int i=0; i<T; i++) {
